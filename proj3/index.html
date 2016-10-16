@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.box {
+  font: 10px sans-serif;
+}
+
+.box line,
+.box rect,
+.box circle {
+  fill: steelblue;
+  stroke: #000;
+  stroke-width: 1px;
+}
+
+.box .center {
+  stroke-dasharray: 3,3;
+}
+
+.box .outlier {
+  fill: none;
+  stroke: #000;
+}
+
+.axis {
+  font: 12px sans-serif;
+}
+ 
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+ 
+.x.axis path { 
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+</style>
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="d3.v3.min.js"></script>
+<script src="box.js"></script>
+<script>
+var labels = true; // show the text labels beside individual boxplots?
+
+var margin = {top: 30, right: 50, bottom: 70, left: 50};
+var  width = 1800 - margin.left - margin.right;
+var height = 600 - margin.top - margin.bottom;
+	
+var min = Infinity,
+    max = -Infinity;
+	
+// parse in the data	
+d3.csv("tumor.csv", function(error, csv) {
+	// using an array of arrays with
+	// data[n][2] 
+	// where n = number of columns in the csv file 
+	// data[i][0] = name of the ith column
+	// data[i][1] = array of values of ith column
+
+	var data = [];
+	data[0]  = [];
+	data[1]  = [];
+	data[2]  = [];
+	data[3]  = [];
+        data[4]  = [];
+        data[5]  = [];
+        data[6]  = [];
+        data[7]  = [];
+        data[8]  = [];
+        data[9]  = [];
+        data[10] = [];
+        data[11] = [];
+        data[12] = [];
+        data[13] = [];
+        data[14] = [];
+        data[15] = [];
+        data[16] = [];
+        data[17] = [];
+        data[18] = [];
+        data[19] = [];
+        data[20] = [];
+        data[21] = [];
+        data[22] = [];
+        data[23] = [];
+        data[24] = [];
+        data[25] = [];
+        data[26] = [];
+        data[27] = [];
+        data[28] = [];
+        data[29] = [];
+        data[30] = [];
+        data[31] = [];
+        data[32] = [];
+
+	// add more rows if your csv file has more columns
+
+	// add here the header of the csv file
+	data[0][0]  = "Tumor_mass(ug)";
+	data[1][0]  = "Eotaxin";
+	data[2][0]  = "G_CSF";
+	data[3][0]  = "GM_CSF";
+        data[4][0]  = "IFNg";
+        data[5][0]  = "IL_10";
+        data[6][0]  = "IL_12p40";
+        data[7][0]  = "IL_12p70";
+        data[8][0]  = "IL_13";
+        data[9][0]  = "IL_15";
+        data[10][0] = "IL_17";
+        data[11][0] = "IL_1a";
+        data[12][0] = "IL_1b";
+        data[13][0] = "IL_2";
+        data[14][0] = "IL_3";
+        data[15][0] = "IL_4";
+        data[16][0] = "IL_5";
+        data[17][0] = "IL_6";
+        data[18][0] = "IL_7";
+        data[19][0] = "IL_9";
+        data[20][0] = "IP_10";
+        data[21][0] = "KC";
+        data[22][0] = "LIF";
+        data[23][0] = "LIX";
+        data[24][0] = "M_CSF";
+        data[25][0] = "MCP_1";
+        data[26][0] = "MIG";
+        data[27][0] = "MIP_1a";
+        data[28][0] = "MIP_1b";
+        data[29][0] = "MIP_2";
+        data[30][0] = "RANTES";
+        data[31][0] = "TNFa";
+        data[32][0] = "VEGF";
+	// add more rows if your csv file has more columns
+
+        // LYMP NODE and AIP
+	data[0][1]  = [];
+	data[1][1]  = [];
+	data[2][1]  = [];
+	data[3][1]  = [];
+        data[4][1]  = [];
+        data[5][1]  = [];
+        data[6][1]  = [];
+        data[7][1]  = [];
+        data[8][1]  = [];
+        data[9][1]  = [];
+        data[10][1] = [];
+        data[11][1] = [];
+        data[12][1] = [];
+        data[13][1] = [];
+        data[14][1] = [];
+        data[15][1] = [];
+        data[16][1] = [];
+        data[17][1] = [];
+        data[18][1] = [];
+        data[19][1] = [];
+        data[20][1] = [];
+        data[21][1] = [];
+        data[22][1] = [];
+        data[23][1] = [];
+        data[24][1] = [];
+        data[25][1] = [];
+        data[26][1] = [];
+        data[27][1] = [];
+        data[28][1] = [];
+        data[29][1] = [];
+        data[30][1] = [];
+        data[31][1] = [];
+        data[32][1] = [];
+
+        // LYMP NODE and AIV
+	data[0][2]  = [];
+	data[1][2]  = [];
+	data[2][2]  = [];
+	data[3][2]  = [];
+        data[4][2]  = [];
+        data[5][2]  = [];
+        data[6][2]  = [];
+        data[7][2]  = [];
+        data[8][2]  = [];
+        data[9][2]  = [];
+        data[10][2] = [];
+        data[11][2] = [];
+        data[12][2] = [];
+        data[13][2] = [];
+        data[14][2] = [];
+        data[15][2] = [];
+        data[16][2] = [];
+        data[17][2] = [];
+        data[18][2] = [];
+        data[19][2] = [];
+        data[20][2] = [];
+        data[21][2] = [];
+        data[22][2] = [];
+        data[23][2] = [];
+        data[24][2] = [];
+        data[25][2] = [];
+        data[26][2] = [];
+        data[27][2] = [];
+        data[28][2] = [];
+        data[29][2] = [];
+        data[30][2] = [];
+        data[31][2] = [];
+        data[32][2] = [];
+
+        // LYMP NODE and IPV
+	data[0][3]  = [];
+	data[1][3]  = [];
+	data[2][3]  = [];
+	data[3][3]  = [];
+        data[4][3]  = [];
+        data[5][3]  = [];
+        data[6][3]  = [];
+        data[7][3]  = [];
+        data[8][3]  = [];
+        data[9][3]  = [];
+        data[10][3] = [];
+        data[11][3] = [];
+        data[12][3] = [];
+        data[13][3] = [];
+        data[14][3] = [];
+        data[15][3] = [];
+        data[16][3] = [];
+        data[17][3] = [];
+        data[18][3] = [];
+        data[19][3] = [];
+        data[20][3] = [];
+        data[21][3] = [];
+        data[22][3] = [];
+        data[23][3] = [];
+        data[24][3] = [];
+        data[25][3] = [];
+        data[26][3] = [];
+        data[27][3] = [];
+        data[28][3] = [];
+        data[29][3] = [];
+        data[30][3] = [];
+        data[31][3] = [];
+        data[32][3] = [];
+
+        // LYMP NODE and APV
+	data[0][4]  = [];
+	data[1][4]  = [];
+	data[2][4]  = [];
+	data[3][4]  = [];
+        data[4][4]  = [];
+        data[5][4]  = [];
+        data[6][4]  = [];
+        data[7][4]  = [];
+        data[8][4]  = [];
+        data[9][4]  = [];
+        data[10][4] = [];
+        data[11][4] = [];
+        data[12][4] = [];
+        data[13][4] = [];
+        data[14][4] = [];
+        data[15][4] = [];
+        data[16][4] = [];
+        data[17][4] = [];
+        data[18][4] = [];
+        data[19][4] = [];
+        data[20][4] = [];
+        data[21][4] = [];
+        data[22][4] = [];
+        data[23][4] = [];
+        data[24][4] = [];
+        data[25][4] = [];
+        data[26][4] = [];
+        data[27][4] = [];
+        data[28][4] = [];
+        data[29][4] = [];
+        data[30][4] = [];
+        data[31][4] = [];
+        data[32][4] = [];
+
+        // LYMP NODE and AIPV
+	data[0][5]  = [];
+	data[1][5]  = [];
+	data[2][5]  = [];
+	data[3][5]  = [];
+        data[4][5]  = [];
+        data[5][5]  = [];
+        data[6][5]  = [];
+        data[7][5]  = [];
+        data[8][5]  = [];
+        data[9][5]  = [];
+        data[10][5] = [];
+        data[11][5] = [];
+        data[12][5] = [];
+        data[13][5] = [];
+        data[14][5] = [];
+        data[15][5] = [];
+        data[16][5] = [];
+        data[17][5] = [];
+        data[18][5] = [];
+        data[19][5] = [];
+        data[20][5] = [];
+        data[21][5] = [];
+        data[22][5] = [];
+        data[23][5] = [];
+        data[24][5] = [];
+        data[25][5] = [];
+        data[26][5] = [];
+        data[27][5] = [];
+        data[28][5] = [];
+        data[29][5] = [];
+        data[30][5] = [];
+        data[31][5] = [];
+        data[32][5] = [];
+
+        // LYMP NODE and Untreated
+	data[0][6]  = [];
+	data[1][6]  = [];
+	data[2][6]  = [];
+	data[3][6]  = [];
+        data[4][6]  = [];
+        data[5][6]  = [];
+        data[6][6]  = [];
+        data[7][6]  = [];
+        data[8][6]  = [];
+        data[9][6]  = [];
+        data[10][6] = [];
+        data[11][6] = [];
+        data[12][6] = [];
+        data[13][6] = [];
+        data[14][6] = [];
+        data[15][6] = [];
+        data[16][6] = [];
+        data[17][6] = [];
+        data[18][6] = [];
+        data[19][6] = [];
+        data[20][6] = [];
+        data[21][6] = [];
+        data[22][6] = [];
+        data[23][6] = [];
+        data[24][6] = [];
+        data[25][6] = [];
+        data[26][6] = [];
+        data[27][6] = [];
+        data[28][6] = [];
+        data[29][6] = [];
+        data[30][6] = [];
+        data[31][6] = [];
+        data[32][6] = []; 
+
+        // Tumor and AIP
+	data[0][7]  = [];
+	data[1][7]  = [];
+	data[2][7]  = [];
+	data[3][7]  = [];
+        data[4][7]  = [];
+        data[5][7]  = [];
+        data[6][7]  = [];
+        data[7][7]  = [];
+        data[8][7]  = [];
+        data[9][7]  = [];
+        data[10][7] = [];
+        data[11][7] = [];
+        data[12][7] = [];
+        data[13][7] = [];
+        data[14][7] = [];
+        data[15][7] = [];
+        data[16][7] = [];
+        data[17][7] = [];
+        data[18][7] = [];
+        data[19][7] = [];
+        data[20][7] = [];
+        data[21][7] = [];
+        data[22][7] = [];
+        data[23][7] = [];
+        data[24][7] = [];
+        data[25][7] = [];
+        data[26][7] = [];
+        data[27][7] = [];
+        data[28][7] = [];
+        data[29][7] = [];
+        data[30][7] = [];
+        data[31][7] = [];
+        data[32][7] = [];
+
+        // Tumor and AIV
+	data[0][8]  = [];
+	data[1][8]  = [];
+	data[2][8]  = [];
+	data[3][8]  = [];
+        data[4][8]  = [];
+        data[5][8]  = [];
+        data[6][8]  = [];
+        data[7][8]  = [];
+        data[8][8]  = [];
+        data[9][8]  = [];
+        data[10][8] = [];
+        data[11][8] = [];
+        data[12][8] = [];
+        data[13][8] = [];
+        data[14][8] = [];
+        data[15][8] = [];
+        data[16][8] = [];
+        data[17][8] = [];
+        data[18][8] = [];
+        data[19][8] = [];
+        data[20][8] = [];
+        data[21][8] = [];
+        data[22][8] = [];
+        data[23][8] = [];
+        data[24][8] = [];
+        data[25][8] = [];
+        data[26][8] = [];
+        data[27][8] = [];
+        data[28][8] = [];
+        data[29][8] = [];
+        data[30][8] = [];
+        data[31][8] = [];
+        data[32][8] = [];
+
+        // Tumor and IPV
+	data[0][9]  = [];
+	data[1][9]  = [];
+	data[2][9]  = [];
+	data[3][9]  = [];
+        data[4][9]  = [];
+        data[5][9]  = [];
+        data[6][9]  = [];
+        data[7][9]  = [];
+        data[8][9]  = [];
+        data[9][9]  = [];
+        data[10][9] = [];
+        data[11][9] = [];
+        data[12][9] = [];
+        data[13][9] = [];
+        data[14][9] = [];
+        data[15][9] = [];
+        data[16][9] = [];
+        data[17][9] = [];
+        data[18][9] = [];
+        data[19][9] = [];
+        data[20][9] = [];
+        data[21][9] = [];
+        data[22][9] = [];
+        data[23][9] = [];
+        data[24][9] = [];
+        data[25][9] = [];
+        data[26][9] = [];
+        data[27][9] = [];
+        data[28][9] = [];
+        data[29][9] = [];
+        data[30][9] = [];
+        data[31][9] = [];
+        data[32][9] = [];
+
+        // Tumor and APV
+	data[0][10]  = [];
+	data[1][10] = [];
+	data[2][10]  = [];
+	data[3][10]  = [];
+        data[4][10]  = [];
+        data[5][10]  = [];
+        data[6][10]  = [];
+        data[7][10]  = [];
+        data[8][10]  = [];
+        data[9][10]  = [];
+        data[10][10] = [];
+        data[11][10] = [];
+        data[12][10] = [];
+        data[13][10] = [];
+        data[14][10] = [];
+        data[15][10] = [];
+        data[16][10] = [];
+        data[17][10] = [];
+        data[18][10] = [];
+        data[19][10] = [];
+        data[20][10] = [];
+        data[21][10] = [];
+        data[22][10] = [];
+        data[23][10] = [];
+        data[24][10] = [];
+        data[25][10] = [];
+        data[26][10] = [];
+        data[27][10] = [];
+        data[28][10] = [];
+        data[29][10] = [];
+        data[30][10] = [];
+        data[31][10] = [];
+        data[32][10] = [];
+
+        // Tumor and AIPV
+	data[0][11]  = [];
+	data[1][11]  = [];
+	data[2][11]  = [];
+	data[3][11]  = [];
+        data[4][11]  = [];
+        data[5][11]  = [];
+        data[6][11]  = [];
+        data[7][11]  = [];
+        data[8][11]  = [];
+        data[9][11]  = [];
+        data[10][11] = [];
+        data[11][11] = [];
+        data[12][11] = [];
+        data[13][11] = [];
+        data[14][11] = [];
+        data[15][11] = [];
+        data[16][11] = [];
+        data[17][11] = [];
+        data[18][11] = [];
+        data[19][11] = [];
+        data[20][11] = [];
+        data[21][11] = [];
+        data[22][11] = [];
+        data[23][11] = [];
+        data[24][11] = [];
+        data[25][11] = [];
+        data[26][11] = [];
+        data[27][11] = [];
+        data[28][11] = [];
+        data[29][11] = [];
+        data[30][11] = [];
+        data[31][11] = [];
+        data[32][11] = [];
+
+        // Tumor and Untreated
+	data[0][12]  = [];
+	data[1][12]  = [];
+	data[2][12]  = [];
+	data[3][12]  = [];
+        data[4][12]  = [];
+        data[5][12]  = [];
+        data[6][12]  = [];
+        data[7][12]  = [];
+        data[8][12]  = [];
+        data[9][12]  = [];
+        data[10][12] = [];
+        data[11][12] = [];
+        data[12][12] = [];
+        data[13][12] = [];
+        data[14][12] = [];
+        data[15][12] = [];
+        data[16][12] = [];
+        data[17][12] = [];
+        data[18][12] = [];
+        data[19][12] = [];
+        data[20][12] = [];
+        data[21][12] = [];
+        data[22][12] = [];
+        data[23][12] = [];
+        data[24][12] = [];
+        data[25][12] = [];
+        data[26][12] = [];
+        data[27][12] = [];
+        data[28][12] = [];
+        data[29][12] = [];
+        data[30][12] = [];
+        data[31][12] = [];
+        data[32][12] = [];
+  
+	csv.forEach(function(x) {
+		var v1 = x.Tumor_mass * 1,
+		        v2  = x.Eotaxin * 1,
+			v3  = x.G_CSF * 1,
+			v4  = x.GM_CSF * 1,
+                        v5  = x.IFNg * 1,
+                        v6  = x.IL_10 * 1,
+                        v7  = x.IL_12p40 * 1,
+                        v8  = x.IL_12p70 * 1,
+                        v9  = x.IL_13 * 1,
+                        v10 = x.IL_15 * 1,
+                        v11 = x.IL_17 * 1,
+                        v12 = x.IL_1a * 1,
+                        v13 = x.IL_1b * 1,
+                        v14 = x.IL_2 * 1,
+                        v15 = x.IL_3 * 1,
+                        v16 = x.IL_4 * 1,
+                        v17 = x.IL_5 * 1,
+                        v18 = x.IL_6 * 1,
+                        v19 = x.IL_7 * 1,
+                        v20 = x.IL_9 * 1,
+                        v21 = x.IP_10 * 1,
+                        v22 = x.KC * 1,
+                        v23 = x.LIF * 1,
+                        v24 = x.LIX * 1,
+                        v25 = x.M_CSF * 1,
+                        v26 = x.MCP_1 * 1,
+                        v27 = x.MIG * 1,
+                        v28 = x.MIP_1a * 1,
+                        v29 = x.MIP_1b * 1,
+                        v30 = x.MIP_2 * 1,  
+                        v31 = x.RANTES * 1,
+                        v32 = x.TNFa * 1,
+                        v33 = x.VEGF * 1,
+                        vOrgan = x.Organ,
+                        vTherapy = x.Therapy ;
+
+                        //alert(x.MIP_2);
+			// add more variables if your csv file has more columns
+			
+		var rowMax = findMax(v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22, v23, v24, v25, v26, v27, v28, v29, v30, v31, v32, v33);
+		var rowMin = findMin(v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22, v23, v24, v25, v26, v27, v28, v29, v30, v31, v32, v33);
+
+                // console.log("rowMax : " + rowMax);
+                // console.log("rowMin : " + rowMin);
+                // console.log("Organ  : " + vOrgan);
+                // console.log("Therapy: " + vTherapy);
+              
+                if ((vOrgan == "Lymph Node") && (vTherapy == "AIP"))
+                {
+		    data[0][1].push(v1);
+		    data[1][1].push(v2);
+		    data[2][1].push(v3);
+		    data[3][1].push(v4);
+                    data[4][1].push(v5);
+                    data[5][1].push(v6);
+                    data[6][1].push(v7);
+                    data[7][1].push(v8);
+                    data[8][1].push(v9);
+                    data[9][1].push(v10);
+                    data[10][1].push(v11);
+                    data[11][1].push(v12);
+                    data[12][1].push(v13);
+                    data[13][1].push(v14);
+                    data[14][1].push(v15);
+                    data[15][1].push(v16);
+                    data[16][1].push(v17);
+                    data[17][1].push(v18);
+                    data[18][1].push(v19);
+                    data[19][1].push(v20);
+                    data[20][1].push(v21);
+                    data[21][1].push(v22);
+                    data[22][1].push(v23);
+                    data[23][1].push(v24);
+                    data[24][1].push(v25);
+                    data[25][1].push(v26);
+                    data[26][1].push(v27);
+                    data[27][1].push(v28);
+                    data[28][1].push(v29);
+                    data[29][1].push(v30);
+                    data[30][1].push(v31);
+                    data[31][1].push(v32);
+                    data[32][1].push(v33);
+                }
+                else if ((vOrgan == "Lymph Node") && (vTherapy == "AIV"))
+                {
+		    data[0][2].push(v1);
+		    data[1][2].push(v2);
+		    data[2][2].push(v3);
+		    data[3][2].push(v4);
+                    data[4][2].push(v5);
+                    data[5][2].push(v6);
+                    data[6][2].push(v7);
+                    data[7][2].push(v8);
+                    data[8][2].push(v9);
+                    data[9][2].push(v10);
+                    data[10][2].push(v11);
+                    data[11][2].push(v12);
+                    data[12][2].push(v13);
+                    data[13][2].push(v14);
+                    data[14][2].push(v15);
+                    data[15][2].push(v16);
+                    data[16][2].push(v17);
+                    data[17][2].push(v18);
+                    data[18][2].push(v19);
+                    data[19][2].push(v20);
+                    data[20][2].push(v21);
+                    data[21][2].push(v22);
+                    data[22][2].push(v23);
+                    data[23][2].push(v24);
+                    data[24][2].push(v25);
+                    data[25][2].push(v26);
+                    data[26][2].push(v27);
+                    data[27][2].push(v28);
+                    data[28][2].push(v29);
+                    data[29][2].push(v30);
+                    data[30][2].push(v31);
+                    data[31][2].push(v32);
+                    data[32][2].push(v33);
+                }
+                else if ((vOrgan == "Lymph Node") && (vTherapy == "IPV"))
+                {
+		    data[0][3].push(v1);
+		    data[1][3].push(v2);
+		    data[2][3].push(v3);
+		    data[3][3].push(v4);
+                    data[4][3].push(v5);
+                    data[5][3].push(v6);
+                    data[6][3].push(v7);
+                    data[7][3].push(v8);
+                    data[8][3].push(v9);
+                    data[9][3].push(v10);
+                    data[10][3].push(v11);
+                    data[11][3].push(v12);
+                    data[12][3].push(v13);
+                    data[13][3].push(v14);
+                    data[14][3].push(v15);
+                    data[15][3].push(v16);
+                    data[16][3].push(v17);
+                    data[17][3].push(v18);
+                    data[18][3].push(v19);
+                    data[19][3].push(v20);
+                    data[20][3].push(v21);
+                    data[21][3].push(v22);
+                    data[22][3].push(v23);
+                    data[23][3].push(v24);
+                    data[24][3].push(v25);
+                    data[25][3].push(v26);
+                    data[26][3].push(v27);
+                    data[27][3].push(v28);
+                    data[28][3].push(v29);
+                    data[29][3].push(v30);
+                    data[30][3].push(v31);
+                    data[31][3].push(v32);
+                    data[32][3].push(v33);
+                }
+                else if ((vOrgan == "Lymph Node") && (vTherapy == "APV"))
+                {
+		    data[0][4].push(v1);
+		    data[1][4].push(v2);
+		    data[2][4].push(v3);
+		    data[3][4].push(v4);
+                    data[4][4].push(v5);
+                    data[5][4].push(v6);
+                    data[6][4].push(v7);
+                    data[7][4].push(v8);
+                    data[8][4].push(v9);
+                    data[9][4].push(v10);
+                    data[10][4].push(v11);
+                    data[11][4].push(v12);
+                    data[12][4].push(v13);
+                    data[13][4].push(v14);
+                    data[14][4].push(v15);
+                    data[15][4].push(v16);
+                    data[16][4].push(v17);
+                    data[17][4].push(v18);
+                    data[18][4].push(v19);
+                    data[19][4].push(v20);
+                    data[20][4].push(v21);
+                    data[21][4].push(v22);
+                    data[22][4].push(v23);
+                    data[23][4].push(v24);
+                    data[24][4].push(v25);
+                    data[25][4].push(v26);
+                    data[26][4].push(v27);
+                    data[27][4].push(v28);
+                    data[28][4].push(v29);
+                    data[29][4].push(v30);
+                    data[30][4].push(v31);
+                    data[31][4].push(v32);
+                    data[32][4].push(v33);
+                }
+                else if ((vOrgan == "Lymph Node") && (vTherapy == "AIPV"))
+                {
+		    data[0][5].push(v1);
+		    data[1][5].push(v2);
+		    data[2][5].push(v3);
+		    data[3][5].push(v4);
+                    data[4][5].push(v5);
+                    data[5][5].push(v6);
+                    data[6][5].push(v7);
+                    data[7][5].push(v8);
+                    data[8][5].push(v9);
+                    data[9][5].push(v10);
+                    data[10][5].push(v11);
+                    data[11][5].push(v12);
+                    data[12][5].push(v13);
+                    data[13][5].push(v14);
+                    data[14][5].push(v15);
+                    data[15][5].push(v16);
+                    data[16][5].push(v17);
+                    data[17][5].push(v18);
+                    data[18][5].push(v19);
+                    data[19][5].push(v20);
+                    data[20][5].push(v21);
+                    data[21][5].push(v22);
+                    data[22][5].push(v23);
+                    data[23][5].push(v24);
+                    data[24][5].push(v25);
+                    data[25][5].push(v26);
+                    data[26][5].push(v27);
+                    data[27][5].push(v28);
+                    data[28][5].push(v29);
+                    data[29][5].push(v30);
+                    data[30][5].push(v31);
+                    data[31][5].push(v32);
+                    data[32][5].push(v33);
+                }
+                else if ((vOrgan == "Lymph Node") && (vTherapy == "Untreated"))
+                {
+		    data[0][6].push(v1);
+		    data[1][6].push(v2);
+		    data[2][6].push(v3);
+		    data[3][6].push(v4);
+                    data[4][6].push(v5);
+                    data[5][6].push(v6);
+                    data[6][6].push(v7);
+                    data[7][6].push(v8);
+                    data[8][6].push(v9);
+                    data[9][6].push(v10);
+                    data[10][6].push(v11);
+                    data[11][6].push(v12);
+                    data[12][6].push(v13);
+                    data[13][6].push(v14);
+                    data[14][6].push(v15);
+                    data[15][6].push(v16);
+                    data[16][6].push(v17);
+                    data[17][6].push(v18);
+                    data[18][6].push(v19);
+                    data[19][6].push(v20);
+                    data[20][6].push(v21);
+                    data[21][6].push(v22);
+                    data[22][6].push(v23);
+                    data[23][6].push(v24);
+                    data[24][6].push(v25);
+                    data[25][6].push(v26);
+                    data[26][6].push(v27);
+                    data[27][6].push(v28);
+                    data[28][6].push(v29);
+                    data[29][6].push(v30);
+                    data[30][6].push(v31);
+                    data[31][6].push(v32);
+                    data[32][6].push(v33);
+                }
+                else if ((vOrgan == "Tumor") && (vTherapy == "AIP"))
+                {
+		    data[0][7].push(v1);
+		    data[1][7].push(v2);
+		    data[2][7].push(v3);
+		    data[3][7].push(v4);
+                    data[4][7].push(v5);
+                    data[5][7].push(v6);
+                    data[6][7].push(v7);
+                    data[7][7].push(v8);
+                    data[8][7].push(v9);
+                    data[9][7].push(v10);
+                    data[10][7].push(v11);
+                    data[11][7].push(v12);
+                    data[12][7].push(v13);
+                    data[13][7].push(v14);
+                    data[14][7].push(v15);
+                    data[15][7].push(v16);
+                    data[16][7].push(v17);
+                    data[17][7].push(v18);
+                    data[18][7].push(v19);
+                    data[19][7].push(v20);
+                    data[20][7].push(v21);
+                    data[21][7].push(v22);
+                    data[22][7].push(v23);
+                    data[23][7].push(v24);
+                    data[24][7].push(v25);
+                    data[25][7].push(v26);
+                    data[26][7].push(v27);
+                    data[27][7].push(v28);
+                    data[28][7].push(v29);
+                    data[29][7].push(v30);
+                    data[30][7].push(v31);
+                    data[31][7].push(v32);
+                    data[32][7].push(v33);
+                }
+                else if ((vOrgan == "Tumor") && (vTherapy == "AIV"))
+                {
+		    data[0][8].push(v1);
+		    data[1][8].push(v2);
+		    data[2][8].push(v3);
+		    data[3][8].push(v4);
+                    data[4][8].push(v5);
+                    data[5][8].push(v6);
+                    data[6][8].push(v7);
+                    data[7][8].push(v8);
+                    data[8][8].push(v9);
+                    data[9][8].push(v10);
+                    data[10][8].push(v11);
+                    data[11][8].push(v12);
+                    data[12][8].push(v13);
+                    data[13][8].push(v14);
+                    data[14][8].push(v15);
+                    data[15][8].push(v16);
+                    data[16][8].push(v17);
+                    data[17][8].push(v18);
+                    data[18][8].push(v19);
+                    data[19][8].push(v20);
+                    data[20][8].push(v21);
+                    data[21][8].push(v22);
+                    data[22][8].push(v23);
+                    data[23][8].push(v24);
+                    data[24][8].push(v25);
+                    data[25][8].push(v26);
+                    data[26][8].push(v27);
+                    data[27][8].push(v28);
+                    data[28][8].push(v29);
+                    data[29][8].push(v30);
+                    data[30][8].push(v31);
+                    data[31][8].push(v32);
+                    data[32][8].push(v33);
+                }
+                else if ((vOrgan == "Tumor") && (vTherapy == "IPV"))
+                {
+		    data[0][9].push(v1);
+		    data[1][9].push(v2);
+		    data[2][9].push(v3);
+		    data[3][9].push(v4);
+                    data[4][9].push(v5);
+                    data[5][9].push(v6);
+                    data[6][9].push(v7);
+                    data[7][9].push(v8);
+                    data[8][9].push(v9);
+                    data[9][9].push(v10);
+                    data[10][9].push(v11);
+                    data[11][9].push(v12);
+                    data[12][9].push(v13);
+                    data[13][9].push(v14);
+                    data[14][9].push(v15);
+                    data[15][9].push(v16);
+                    data[16][9].push(v17);
+                    data[17][9].push(v18);
+                    data[18][9].push(v19);
+                    data[19][9].push(v20);
+                    data[20][9].push(v21);
+                    data[21][9].push(v22);
+                    data[22][9].push(v23);
+                    data[23][9].push(v24);
+                    data[24][9].push(v25);
+                    data[25][9].push(v26);
+                    data[26][9].push(v27);
+                    data[27][9].push(v28);
+                    data[28][9].push(v29);
+                    data[29][9].push(v30);
+                    data[30][9].push(v31);
+                    data[31][9].push(v32);
+                    data[32][9].push(v33);
+                }
+                else if ((vOrgan == "Tumor") && (vTherapy == "APV"))
+                {
+		    data[0][10].push(v1);
+		    data[1][10].push(v2);
+		    data[2][10].push(v3);
+		    data[3][10].push(v4);
+                    data[4][10].push(v5);
+                    data[5][10].push(v6);
+                    data[6][10].push(v7);
+                    data[7][10].push(v8);
+                    data[8][10].push(v9);
+                    data[9][10].push(v10);
+                    data[10][10].push(v11);
+                    data[11][10].push(v12);
+                    data[12][10].push(v13);
+                    data[13][10].push(v14);
+                    data[14][10].push(v15);
+                    data[15][10].push(v16);
+                    data[16][10].push(v17);
+                    data[17][10].push(v18);
+                    data[18][10].push(v19);
+                    data[19][10].push(v20);
+                    data[20][10].push(v21);
+                    data[21][10].push(v22);
+                    data[22][10].push(v23);
+                    data[23][10].push(v24);
+                    data[24][10].push(v25);
+                    data[25][10].push(v26);
+                    data[26][10].push(v27);
+                    data[27][10].push(v28);
+                    data[28][10].push(v29);
+                    data[29][10].push(v30);
+                    data[30][10].push(v31);
+                    data[31][10].push(v32);
+                    data[32][10].push(v33);
+                }
+                else if ((vOrgan == "Tumor") && (vTherapy == "AIPV"))
+                {
+		    data[0][11].push(v1);
+		    data[1][11].push(v2);
+		    data[2][11].push(v3);
+		    data[3][11].push(v4);
+                    data[4][11].push(v5);
+                    data[5][11].push(v6);
+                    data[6][11].push(v7);
+                    data[7][11].push(v8);
+                    data[8][11].push(v9);
+                    data[9][11].push(v10);
+                    data[10][11].push(v11);
+                    data[11][11].push(v12);
+                    data[12][11].push(v13);
+                    data[13][11].push(v14);
+                    data[14][11].push(v15);
+                    data[15][11].push(v16);
+                    data[16][11].push(v17);
+                    data[17][11].push(v18);
+                    data[18][11].push(v19);
+                    data[19][11].push(v20);
+                    data[20][11].push(v21);
+                    data[21][11].push(v22);
+                    data[22][11].push(v23);
+                    data[23][11].push(v24);
+                    data[24][11].push(v25);
+                    data[25][11].push(v26);
+                    data[26][11].push(v27);
+                    data[27][11].push(v28);
+                    data[28][11].push(v29);
+                    data[29][11].push(v30);
+                    data[30][11].push(v31);
+                    data[31][11].push(v32);
+                    data[32][11].push(v33);
+                }
+                else if ((vOrgan == "Tumor") && (vTherapy == "Untreated"))
+                {
+		    data[0][12].push(v1);
+		    data[1][12].push(v2);
+		    data[2][12].push(v3);
+		    data[3][12].push(v4);
+                    data[4][12].push(v5);
+                    data[5][12].push(v6);
+                    data[6][12].push(v7);
+                    data[7][12].push(v8);
+                    data[8][12].push(v9);
+                    data[9][12].push(v10);
+                    data[10][12].push(v11);
+                    data[11][12].push(v12);
+                    data[12][12].push(v13);
+                    data[13][12].push(v14);
+                    data[14][12].push(v15);
+                    data[15][12].push(v16);
+                    data[16][12].push(v17);
+                    data[17][12].push(v18);
+                    data[18][12].push(v19);
+                    data[19][12].push(v20);
+                    data[20][12].push(v21);
+                    data[21][12].push(v22);
+                    data[22][12].push(v23);
+                    data[23][12].push(v24);
+                    data[24][12].push(v25);
+                    data[25][12].push(v26);
+                    data[26][12].push(v27);
+                    data[27][12].push(v28);
+                    data[28][12].push(v29);
+                    data[29][12].push(v30);
+                    data[30][12].push(v31);
+                    data[31][12].push(v32);
+                    data[32][12].push(v33);
+                }                 
+
+		 // add more rows if your csv file has more columns
+		 
+		if (rowMax > max) max = rowMax;
+		if (rowMin < min) min = rowMin;	
+	});
+  
+	var chart = d3.box()
+		.whiskers(iqr(1.5))
+		.height(height)	
+		//.domain([min, max])
+                .domain([0, 70])
+		.showLabels(labels);
+
+	var svg = d3.select("body").append("svg")
+		.attr("width", width + margin.left + margin.right)
+		.attr("height", height + margin.top + margin.bottom)
+		.attr("class", "box")    
+		.append("g")
+		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+	
+	// the x-axis
+	var x = d3.scale.ordinal()	   
+		.domain( data.map(function(d) { console.log(d); return d[0] } ) )	    
+		.rangeRoundBands([0 , width], 0.7, 0.8); 		
+
+	var xAxis = d3.svg.axis()
+		.scale(x)
+		.orient("bottom");
+
+	// the y-axis
+	var y = d3.scale.linear()
+		//.domain([min, max])
+                .domain([0, 70])
+		.range([height + margin.top, 0]);
+
+	var formatter = d3.format(',.0f');
+        var logFormatter = d3.format('.3f');
+
+	var yAxis = d3.svg.axis()
+        .scale(y)
+        //.ticks(0, ",.0f")
+        .tickValues([0.001, 0.01, 0.1, 0.5, 1.0, 10, 20, 40, 60])
+        .orient("left");
+        //yAxis.tickValues([0.001, 0.01, 0.1, 0.5, 1.0, 10, 20, 40, 60]);
+
+	// draw the boxplots	
+	svg.selectAll(".box")	   
+      .data(data)
+	  .enter().append("g")
+		.attr("transform", function(d) { return "translate(" +  x(d[0])  + "," + margin.top + ")"; } )
+      .call(chart.width(x.rangeBand())); 
+	
+	      
+	// add a title
+	svg.append("text")
+        .attr("x", (width / 2))             
+        .attr("y", 0 + (margin.top / 2))
+        .attr("text-anchor", "middle")  
+        .style("font-size", "18px") 
+        //.style("text-decoration", "underline")  
+        .text("Tumor Explorer Demo");
+ 
+	 // draw y axis
+	svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+		.append("text") // and text1
+		  .attr("transform", "rotate(-90)")
+		  .attr("y", 6)
+		  .attr("dy", ".71em")
+		  .style("text-anchor", "end")
+		  .style("font-size", "16px") 
+		  .text("Size");		
+	
+	// draw x axis	
+	svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + (height  + margin.top + 10) + ")")
+      .call(xAxis)
+	  .append("text")             // text label for the x axis
+        .attr("x", (width / 2) )
+        .attr("y",  10 )
+		.attr("dy", ".71em")
+        .style("text-anchor", "middle")
+		.style("font-size", "16px") 
+        .text(""); 
+});
+
+// Returns a function to compute the interquartile range.
+function iqr(k) {
+  return function(d, i) {
+    var q1 = d.quartiles[0],
+        q3 = d.quartiles[2],
+        iqr = (q3 - q1) * k,
+        i = -1,
+        j = d.length;
+    while (d[++i] < q1 - iqr);
+    while (d[--j] > q3 + iqr);
+    return [i, j];
+  };
+}
+
+function findMax(v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22, v23, v24, v25, v26, v27, v28, v29, v30, v31, v32, v33)
+{
+    maxi = v1;
+    if (v2 > maxi) { maxi = v2; };
+    if (v3 > maxi) { maxi = v3; };
+    if (v4 > maxi) { maxi = v4; };
+    if (v5 > maxi) { maxi = v5; };
+    if (v6 > maxi) { maxi = v2; };
+    if (v7 > maxi) { maxi = v2; };
+    if (v8 > maxi) { maxi = v2; };
+    if (v9 > maxi) { maxi = v2; };
+    if (v10 > maxi) { maxi = v2; };
+    if (v11 > maxi) { maxi = v2; };
+    if (v12 > maxi) { maxi = v2; };
+    if (v13 > maxi) { maxi = v2; };
+    if (v14 > maxi) { maxi = v2; };
+    if (v15 > maxi) { maxi = v2; };
+    if (v16 > maxi) { maxi = v2; };
+    if (v17 > maxi) { maxi = v2; };
+    if (v18 > maxi) { maxi = v2; };
+    if (v19 > maxi) { maxi = v2; };
+    if (v20 > maxi) { maxi = v2; };
+    if (v21 > maxi) { maxi = v2; };
+    if (v22 > maxi) { maxi = v2; };
+    if (v23 > maxi) { maxi = v2; };
+    if (v24 > maxi) { maxi = v2; };
+    if (v25 > maxi) { maxi = v2; };
+    if (v26 > maxi) { maxi = v2; };
+    if (v27 > maxi) { maxi = v2; };
+    if (v28 > maxi) { maxi = v2; };
+    if (v29 > maxi) { maxi = v2; };
+    if (v30 > maxi) { maxi = v2; };
+    if (v31 > maxi) { maxi = v2; };
+    if (v32 > maxi) { maxi = v2; };
+    if (v33 > maxi) { maxi = v2; };
+    return maxi;
+}
+
+
+function findMin(v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22, v23, v24, v25, v26, v27, v28, v29, v30, v31, v32, v33)
+{
+    mini = v1;
+    if (v2 < mini) { mini = v2; };
+    if (v3 < mini) { mini = v3; };
+    if (v4 < mini) { mini = v4; };
+    if (v5 < mini) { mini = v5; };
+    if (v6 < mini) { mini = v2; };
+    if (v7 < mini) { mini = v2; };
+    if (v8 < mini) { mini = v2; };
+    if (v9 < mini) { mini = v2; };
+    if (v10 < mini) { mini = v2; };
+    if (v11 < mini) { mini = v2; };
+    if (v12 < mini) { mini = v2; };
+    if (v13 < mini) { mini = v2; };
+    if (v14 < mini) { mini = v2; };
+    if (v15 < mini) { mini = v2; };
+    if (v16 < mini) { mini = v2; };
+    if (v17 < mini) { mini = v2; };
+    if (v18 < mini) { mini = v2; };
+    if (v19 < mini) { mini = v2; };
+    if (v20 < mini) { mini = v2; };
+    if (v21 < mini) { mini = v2; };
+    if (v22 < mini) { mini = v2; };
+    if (v23 < mini) { mini = v2; };
+    if (v24 < mini) { mini = v2; };
+    if (v25 < mini) { mini = v2; };
+    if (v26 < mini) { mini = v2; };
+    if (v27 < mini) { mini = v2; };
+    if (v28 < mini) { mini = v2; };
+    if (v29 < mini) { mini = v2; };
+    if (v30 < mini) { mini = v2; };
+    if (v31 < mini) { mini = v2; };
+    if (v32 < mini) { mini = v2; };
+    if (v33 < mini) { mini = v2; };
+    return mini;
+}
+</script>
+
