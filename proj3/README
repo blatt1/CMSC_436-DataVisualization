@@ -1,0 +1,6 @@
+README
+------
+
+  To see the visualization, please open up ./index.html on the browser.
+
+  The javascript will load up the data from ./tumor.csv and display it on whisker plot. 
