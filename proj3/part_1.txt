@@ -1,0 +1,46 @@
+- Part 1 information
+    - Group names
+        Group 6
+
+    - Group idea
+        We were trying to avoid the cluttering, no. 2 in the problem list.
+        The solution involve :
+          + Combine the curves/lines those are within 75 percentile and 25 percentile and hide the details.
+          + Display the curves with darker color.
+
+    - Solution sketch
+        please see the diagram
+
+    - Pros and Cons
+        Pros
+            It hide the details on overview.
+            Outliers are easy to be spotted.
+            Can be zoomed-in if the user needs details.
+
+        Cons
+            Implementation the idea will be complected.
+            It does not show  mean values.
+
+ - Design choices. Why is box and whisker plot good/bad?
+	Whisker plots are easier to implement.
+        It shows detail even on the overview level.
+        It shows 75 percentile, 25 percentile, minimum, maximum and mean values
+
+ - Steps to produce your visualization
+        Understand the data.
+        Understand parallel coordinates visualization.
+        Understand whisker plot.
+        Study d3.js.
+            How to load data.
+            Creating Axis and Scale them.
+            Implement Whisker plot in d3.js
+            Implement multiple whisker plots.
+
+ - What went wrong?
+        Ran out of time while implementing the whisker plot in d3.js
+        d3's syntax is different common programming languages and it is not easy to understand for the beginners.
+
+ - What would you change in the future?
+        I'd learn d3.js first. Implement a couple of prototypes before working on the actual project.
+        Whisker plot idea is perfect and simple enough for this data.
+
