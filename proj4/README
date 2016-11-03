@@ -1,0 +1,14 @@
+NOTE**
+  It needs internet connection to connect to the database server.
+
+
+
+HOW TO COMPILE
+--------------
+$> g++ -std=c++11 encounter.o test.cpp -Wall -I/usr/include/cppconn -o display_vis -L/usr/lib -lmysqlcppconn -lGL -lGLU -lglut
+
+
+
+HOW TO RUN
+----------
+$> ./display_vis
