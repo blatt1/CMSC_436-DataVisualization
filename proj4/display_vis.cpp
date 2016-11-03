@@ -13,7 +13,7 @@
 #include "encounter.h"
 
 #define MINPID 1
-#define MAXPID 40
+#define MAXPID 30
 
 using namespace std;
 using namespace sql;
